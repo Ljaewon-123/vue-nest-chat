@@ -1,16 +1,21 @@
 <template>
   <div class="chat-container">
     <header class="header" >
-      오픈채팅
+      오픈채팅 방
     </header>
     <div class="chat-area scroll">
       <OpenchatRoom />
+      <!-- <Rooms /> -->
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
 import OpenchatRoom from '@/components/OpenchatRoom.vue';
+import Rooms from '@/components/Rooms.vue';
+import { useRequestStore } from '@/stores/request';
+
+const { joinRoom } = useRequestStore()
 
 </script>
 

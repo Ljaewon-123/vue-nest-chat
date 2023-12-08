@@ -4,7 +4,7 @@
 
 <script setup lang="ts">
 import { RouterLink, RouterView } from 'vue-router'
-import { useSocketStore } from './stores/socket';
+import { useSocketStore } from '@/stores/socket';
 
 const { connect } = useSocketStore()
 
