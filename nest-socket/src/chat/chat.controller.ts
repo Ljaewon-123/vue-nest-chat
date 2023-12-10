@@ -9,10 +9,5 @@ export class ChatController {
     private chatService: ChatService,
   ){}
 
-  @Post('join')
-  joinRooms(@Body('roomName') roomName :string){
-    this.chatService.joinRooms(roomName)
-  }
-
 
 }

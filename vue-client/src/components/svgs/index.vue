@@ -4,11 +4,9 @@
 
 <script setup lang="ts">
 import { computed } from 'vue';
-import IconCommunity from './IconCommunity.vue';
-import IconDocumentation from './IconDocumentation.vue';
-import IconEcosystem from './IconEcosystem.vue';
-import IconSupport from './IconSupport.vue';
-import IconTooling from './IconTooling.vue';
+import leftArrow from './left-arrow.vue';
+import rightArrow from './right-arrow.vue';
+import xmark from './xmark.vue';
 
 const props = defineProps({
   name:{
@@ -19,12 +17,10 @@ const props = defineProps({
 
 const dynamicComponent = computed(() => {
   switch(props.name){
-    case 'community' : return IconCommunity
-    case 'document' : return IconDocumentation
-    case 'ecosystem' : return IconEcosystem
-    case 'support' : return IconSupport
-    case 'tooling' : return IconTooling
-    default : return IconCommunity
+    case 'left' : return leftArrow
+    case 'right' : return rightArrow
+    case 'xmark' : return xmark
+    default : return xmark
   }
 })
 

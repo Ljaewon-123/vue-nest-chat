@@ -1,5 +1,5 @@
 import { Logger } from '@nestjs/common';
-import { MessageBody, SubscribeMessage, WebSocketGateway, WebSocketServer } from '@nestjs/websockets';
+import { ConnectedSocket, MessageBody, SubscribeMessage, WebSocketGateway, WebSocketServer } from '@nestjs/websockets';
 import { Server, Socket } from 'socket.io';
 import { ConfigService } from '@nestjs/config';
 
@@ -7,6 +7,7 @@ import { ConfigService } from '@nestjs/config';
 @WebSocketGateway({namespace: 'chat'})
 export class ChatGateway {
   
+  // 서버에서 공통적으로 socket작업할때 
   @WebSocketServer() server: Server
 
   private logger: Logger = new Logger(ChatGateway.name)
@@ -24,11 +25,21 @@ export class ChatGateway {
   }
 
   @SubscribeMessage('message')
-  handleMessage(@MessageBody() message: string) {
+  handleMessage(@MessageBody() message: string,  @ConnectedSocket() client: Socket,) {
 
     console.log(message)
 
-    this.server.emit('response', message)
+    // client.emit('response', message)
+    return message
+    // this.server.emit('response', message)
+  }
+
+  @SubscribeMessage('enter_room')
+  enterRoom(@MessageBody() roomName: string,  @ConnectedSocket() client: Socket,) {
+
+    client.join(roomName)
+
+    return roomName
   }
 
 

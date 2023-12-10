@@ -6,9 +6,9 @@
 import { RouterLink, RouterView } from 'vue-router'
 import { useSocketStore } from '@/stores/socket';
 
-const { connect } = useSocketStore()
+// const { connect } = useSocketStore()
 
-connect()
+// connect()
 
 </script>
 
