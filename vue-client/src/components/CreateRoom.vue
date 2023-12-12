@@ -19,6 +19,7 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import svgComponent from '@/components/svgs/index.vue'
+import { useSystemStore } from '@/stores/system';
 
 const props = defineProps({
   show: {
@@ -27,16 +28,16 @@ const props = defineProps({
   }
 })
 
+const { onAlert, offAlert } = useSystemStore()
+
 const emit = defineEmits(['close', 'addRoom'])
 
 const roomName = ref('')
 
 const craeteRoom = () => {
-  if(roomName.value == '') return // alert
+  if(roomName.value == '') return onAlert('write room name')
   emit('addRoom', roomName.value)
   roomName.value = ''
-
-  // roomName 보내서 방 join  // alert
 }
 
 const close = () => {
@@ -46,6 +47,18 @@ const close = () => {
 </script>
 
 <style scoped>
+.modal-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.4);
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 5;
+}
 .svg{
   cursor: pointer;
 }

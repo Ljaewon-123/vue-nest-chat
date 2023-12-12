@@ -6,8 +6,8 @@
       <button @click="createRoom" class="create-btn">create room</button>
     </header>
     <div class="chat-area scroll">
-      <RoomList v-if="!joinRoom" :rooms="roomLst" />
-      <Room v-else />
+      <RoomList :rooms="roomLst" />
+      <!-- <Room v-else /> -->
     </div>
   </div>
   
@@ -24,7 +24,7 @@ import { useSystemStore } from '@/stores/system';
 import { storeToRefs } from 'pinia';
 
 const system = useSystemStore()
-const { joinRoom } = storeToRefs(system)
+// const { joinRoom } = storeToRefs(system)
 
 const show = ref(false)
 const roomLst = ref([] as roomSocket[])

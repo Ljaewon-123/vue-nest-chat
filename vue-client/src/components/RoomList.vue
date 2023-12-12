@@ -1,6 +1,6 @@
 <template>
 <TransitionGroup name="list">
-  <div v-for="item, index in rooms" :key="index" @click="test" class="flex room" >
+  <div v-for="item, index in rooms" :key="index" @click="enterRoom($event, item.roomName)" class="flex room" >
 
     <div v-if="!roomModify" >{{ item.roomName }}</div>
     <div v-else><input v-model="item.roomName" type="text"> </div>
@@ -18,9 +18,15 @@ import type { roomSocket } from '@/types';
 import { ref } from 'vue';
 import { useSystemStore } from '@/stores/system'
 import { storeToRefs } from 'pinia';
+import { useRouter } from 'vue-router';
+import router from '@/router';
 
 const system = useSystemStore()
-const { joinRoom } = storeToRefs(system)
+// const { joinRoom } = storeToRefs(system)
+const { onAlert, offAlert } = useSystemStore()
+
+// const router = useRouter()
+
 
 const props = defineProps({
   rooms: Array<roomSocket>
@@ -28,14 +34,17 @@ const props = defineProps({
 
 const roomModify = ref(false)
 
-const test = (event: any) => {
+const enterRoom = (event: any, roomName:string) => {
   // console.log(event.target.classList)
   const clcickBtn = event.target.classList.value.includes('btn')
   // console.log(clcickBtn)
 
   if(clcickBtn) return 
 
-  joinRoom.value = true
+  onAlert('enter the room')
+
+  router.push({ path: '/room/:', params: { roomName } })
+
 }
 
 const deleteRoom = (index: number) => {
