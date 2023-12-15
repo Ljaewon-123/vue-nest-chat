@@ -1,10 +1,13 @@
 <template>
   <RouterView />
+
+  <Alert />
 </template>
 
 <script setup lang="ts">
 import { RouterLink, RouterView } from 'vue-router'
 import { useSocketStore } from '@/stores/socket';
+import Alert from './components/Alert.vue';
 
 // const { connect } = useSocketStore()
 

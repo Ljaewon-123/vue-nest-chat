@@ -3,7 +3,7 @@
   <div v-for="item, index in rooms" :key="index" @click="enterRoom($event, item.roomName)" class="flex room" >
 
     <div v-if="!roomModify" >{{ item.roomName }}</div>
-    <div v-else><input v-model="item.roomName" type="text"> </div>
+    <div v-else><input class="input" v-model="item.roomName" type="text" maxlength="19"> </div>
 
     <div class="btn-area">
       <button class="btn" @click="modifyRoomName(index)" >modefy</button>
@@ -20,30 +20,31 @@ import { useSystemStore } from '@/stores/system'
 import { storeToRefs } from 'pinia';
 import { useRouter } from 'vue-router';
 import router from '@/router';
-
-const system = useSystemStore()
-// const { joinRoom } = storeToRefs(system)
-const { onAlert, offAlert } = useSystemStore()
-
-// const router = useRouter()
+import { useSocketStore } from '@/stores/socket';
 
 
 const props = defineProps({
   rooms: Array<roomSocket>
-})
+  })
+
+const system = useSystemStore()
+const { onAlert, offAlert } = useSystemStore()
+const { chat } = useSocketStore()
 
 const roomModify = ref(false)
+
+
 
 const enterRoom = (event: any, roomName:string) => {
   // console.log(event.target.classList)
   const clcickBtn = event.target.classList.value.includes('btn')
-  // console.log(clcickBtn)
+  const clickInput = event.target.classList.value.includes('input')
 
-  if(clcickBtn) return 
+  if(clcickBtn || clickInput) return 
 
   onAlert('enter the room')
 
-  router.push({ path: '/room/:', params: { roomName } })
+  router.push({ path: `room/${roomName}` })
 
 }
 

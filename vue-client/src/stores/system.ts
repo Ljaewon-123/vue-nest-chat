@@ -1,12 +1,13 @@
 import { ref, computed } from 'vue'
 import { defineStore } from 'pinia'
+import type { roomSocket } from '@/types'
 
 export const useSystemStore = defineStore('system', () => {
 
+  const roomLst = ref([] as roomSocket[])
+
   const show = ref(false)
   const mess = ref('')
-
-  const joinRoom = ref(false)
 
   function onAlert(message:string){
     show.value = true
@@ -29,7 +30,7 @@ export const useSystemStore = defineStore('system', () => {
     offAlert,
     show,
     mess,
-    joinRoom
+    roomLst
   }
 
 })

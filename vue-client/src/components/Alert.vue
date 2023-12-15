@@ -1,7 +1,9 @@
 <template>
 <Transition :name="'bounce'">
   <div v-if="show" class="alert">
-    {{ mess }}
+    <div class="text">
+      {{ mess }}
+    </div>
   </div>
 </Transition>
 </template>
@@ -17,13 +19,21 @@ const { onAlert, offAlert } = useSystemStore()
 </script>
 
 <style scoped>
-.alert{
+.text{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--vt-c-modal);
+  border-radius: 12px;
   width: 150px;
   height: 60px;
   border-radius: 12px;
+}
+.alert{
+  
   position: fixed;
   top: 30px;
-  left: 40%;
+  left: 45%;
   color: #ffffff;
   /* background-color: var(--vt-c-main); */
 

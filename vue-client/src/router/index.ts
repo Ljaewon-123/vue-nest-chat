@@ -3,7 +3,12 @@ import { createRouter, createWebHistory } from 'vue-router'
 const routes = [
   {
     path: '/',
-    redirect: '/main'
+    redirect: '/name'
+  },
+  {
+    path: '/name',
+    name : 'Name',
+    component: () => import('@/views/UserNameView.vue')
   },
   {
     path: '/main',
