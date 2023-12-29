@@ -4,10 +4,12 @@ import { io, Manager } from 'socket.io-client';
 
 export const useSocketStore = defineStore('socket', () => {
 
+  // 처음 사용되야지만 연결.. 나쁘지 않네
   const manager = new Manager(`${import.meta.env.VITE_SOCKET_URL}`)
 
   // const socket = manager.socket('/')
   const chat = manager.socket('/chat')
+
 
   const connect = () => {
     console.log('?')

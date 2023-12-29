@@ -7,6 +7,7 @@ import { computed } from 'vue';
 import leftArrow from './left-arrow.vue';
 import rightArrow from './right-arrow.vue';
 import xmark from './xmark.vue';
+import reload from './reload.vue'
 
 const props = defineProps({
   name:{
@@ -20,6 +21,7 @@ const dynamicComponent = computed(() => {
     case 'left' : return leftArrow
     case 'right' : return rightArrow
     case 'xmark' : return xmark
+    case 'reload' : return reload
     default : return xmark
   }
 })

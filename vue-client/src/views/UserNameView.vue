@@ -1,15 +1,15 @@
 <template>
   <Transition >
-    <div v-if="props.show" class="modal-container">
+    <div class="modal-container">
       <div class="modal">
         <header>
-          <div style="flex:1; text-align: center;">create room</div>
-          <svgComponent class="svg" :name="'xmark'" @click="close()"></svgComponent>
+          <div style="flex:1; text-align: center;">create user name</div>
+          <!-- <svgComponent class="svg" :name="'xmark'" @click="close()"></svgComponent> -->
         </header>
         <div class="flex input">
           <div class="text"></div>
-          <input @keyup.enter="[craeteRoom(), close()]" v-model="roomName" type="text" maxlength="19" placeholder="Room Name" required>
-          <button class="btn" @click="[craeteRoom(), close()]">create</button>
+          <input @keyup.enter="[craeteName(),]" v-model="userName" type="text" maxlength="11" placeholder="Room Name" required>
+          <button class="btn" @click="[craeteName(),]">create</button>
         </div>
       </div>
     </div>
@@ -20,29 +20,24 @@
 import { ref } from 'vue'
 import svgComponent from '@/components/svgs/index.vue'
 import { useSystemStore } from '@/stores/system';
-
-const props = defineProps({
-  show: {
-    type: Boolean,
-    required: true
-  }
-})
+import { useRouter } from 'vue-router';
 
 const { onAlert, offAlert } = useSystemStore()
 
-const emit = defineEmits(['close', 'addRoom'])
+const router = useRouter()
 
-const roomName = ref('')
+const userName = ref('')
 
-const craeteRoom = () => {
-  if(roomName.value == '') return onAlert('write room name')
-  emit('addRoom', roomName.value)
-  roomName.value = ''
+const craeteName = () => {
+  if(userName.value == '') return onAlert('write user name')
+
+  localStorage.setItem('userName', userName.value);
+  onAlert(`Welcome ${userName.value}`)
+  userName.value = ''
+  router.push({ path: `main` })
 }
 
-const close = () => {
-  emit('close', false )
-}
+
 
 </script>
 
