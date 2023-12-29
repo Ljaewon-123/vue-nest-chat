@@ -1,11 +1,13 @@
-import { Injectable } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 import { ChatGateway } from './chat.gateway';
+import { IORedisKey } from 'src/redis/redis.interface';
 
 @Injectable()
 export class ChatService {
 
   constructor(
-    private chatGateway : ChatGateway
+    private chatGateway : ChatGateway,
+
     
   ){}
   

@@ -19,6 +19,11 @@ const routes = [
     path: '/room/:roomName',
     name: 'Room',
     component: () => import('@/views/RoomView.vue')
+  },
+  {
+    path: '/redis',
+    name: 'Redis',
+    component: () => import('@/views/RedisStreamView.vue')
   }
 ]
 

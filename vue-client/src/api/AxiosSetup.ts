@@ -11,3 +11,5 @@ export function create(baseURL: string, options?: any) {
 }
 
 export const httpChat = create(`${APP_URL}/chat`)
+
+export const httpApp = create(`${APP_URL}`)
