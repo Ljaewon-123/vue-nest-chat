@@ -24,7 +24,7 @@ export class RedisStreamService {
     }
 
     const add = await this.redis.xadd(streamName, '*', ...Object.entries(fieldsToStore).flat() as RedisValue[])
-    console.log(add)
+    // console.log(add)
     return add
   }
 

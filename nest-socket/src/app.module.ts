@@ -7,6 +7,8 @@ import { ChatController } from './chat/chat.controller';
 import { ChatModule } from './chat/chat.module';
 import { RedisStreamModule } from './redis-stream/redis-stream.module';
 import { redisModule } from './redis/modules.config';
+import { APP_FILTER } from '@nestjs/core';
+import { WsFilter } from './filter/ws.filter';
 
 
 @Module({
@@ -20,6 +22,12 @@ import { redisModule } from './redis/modules.config';
     RedisStreamModule,
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [
+    AppService,
+    {
+      provide: APP_FILTER,
+      useClass: WsFilter,
+    },
+  ],
 })
 export class AppModule {}

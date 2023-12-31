@@ -90,7 +90,7 @@ const welcomeText = (name:string, mess:string) => {
   /* grid-template-rows: auto auto; 두 개의 행 생성 */
   /* width: 100%;
   height: 100%; */
-  border: 1px solid #000; /* 네모 안에 테두리를 보기 위한 스타일 */
+  /* border: 1px solid #000; 네모 안에 테두리를 보기 위한 스타일 */
 }
 .mine{
   grid-column: 1;

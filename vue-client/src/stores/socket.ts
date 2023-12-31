@@ -8,11 +8,15 @@ export const useSocketStore = defineStore('socket', () => {
   const manager = new Manager(`${import.meta.env.VITE_SOCKET_URL}`)
 
   // const socket = manager.socket('/')
-  const chat = manager.socket('/chat')
+  const chat = manager.socket('/chat',{
+    auth: {
+      token: "ㅜ Token"
+    }
+  })
 
 
   const connect = () => {
-    console.log('?')
+    console.log('connect socket')
 
     chat.emit('message','connect to server')
     

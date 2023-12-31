@@ -1,13 +1,15 @@
-import { Logger } from '@nestjs/common';
+import { Logger, UseGuards } from '@nestjs/common';
 import { ConnectedSocket, MessageBody, SubscribeMessage, WebSocketGateway, WebSocketServer } from '@nestjs/websockets';
 import { Socket, Server } from 'socket.io';
 import { ConfigService } from '@nestjs/config';
+import { GatewayAuthGuard } from 'src/guard/gateway-auth.guard';
 
 // 80, {namespace: 'chat'}
 @WebSocketGateway({namespace: 'chat'})
 export class ChatGateway {
   private clientIntervals: Map<string, NodeJS.Timeout> = new Map();
   private logger: Logger = new Logger(ChatGateway.name)
+  private testToken = "Token"
   
   // 서버에서 공통적으로 socket작업할때 # 기본 플랫폼별 서버 인스턴스 
   @WebSocketServer() server: Server
@@ -37,9 +39,14 @@ export class ChatGateway {
     this.logger.log('웹소켓 서버 초기화 ✅');
   }
 
+  
   handleConnection(client: Socket, ...args: any[]) {
     this.logger.log(`Client Connected : ${client.id}`);
     this.startSendingData(client)
+  }
+
+  isValid(token:string){
+    return token == this.testToken ? true : false
   }
 
   handleDisconnect(client: Socket) {
@@ -47,10 +54,25 @@ export class ChatGateway {
     this.stopSendingData(client)
   }
 
+  @UseGuards(GatewayAuthGuard)
   @SubscribeMessage('message')
   handleMessage(@MessageBody() message: { userName:string, value:string },  @ConnectedSocket() client: Socket) {
     
     // console.log(client.rooms)
+
+    // nestjs 기능사용으로 변경 
+    // client.use((socket, next) => {
+  
+    //   const token = client.handshake.auth.token;
+    //   console.log(this.isValid(token))
+  
+    //   if (this.isValid(token)) {
+    //     console.log('pass')
+    //     next();
+    //   } else {
+    //     next(new Error("invalid"));
+    //   }
+    // })
     
     const arrayRoom = Array.from(client.rooms)
     const currentRoom = arrayRoom.find(room => room !== client.id);
