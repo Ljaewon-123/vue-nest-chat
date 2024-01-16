@@ -15,7 +15,7 @@
       </div>
     </div>
 
-    <form>
+    <form class="form-send">
       <div class="flex">
         <input v-model="input" type="text" class="input" placeholder="Send Message" required>
         <button @click.prevent="submit()" class="btn">전송</button>
@@ -23,6 +23,9 @@
     </form>
 
   </div>
+  <v-snackbar color="error" location="top" v-model="snackbar" :timeout="2000">
+    {{ socketErrText }}
+  </v-snackbar>
 </template>
 
 <script setup lang="ts">
@@ -37,6 +40,18 @@ const input = ref()
 const messArr = ref([] as any[])
 
 const userName = ref(localStorage.getItem('userName'))
+
+const socketErrText = ref('')
+const snackbar = ref(false)
+
+const exceptionSocket = () => {
+  chat.on('exception', (error) => {
+    socketErrText.value = error.message
+
+    snackbar.value = true
+  })
+}
+exceptionSocket()
 
 chat.on('response', (mess: {value:string, userName:string}) => {
 
@@ -128,11 +143,17 @@ const welcomeText = (name:string, mess:string) => {
 }
 .btn{
   margin: 0;
-  padding: 2px 25px;
+  padding: 8px 24px;
+  background-color: var(--vt-c-main);
 }
 .flex{
   display: flex;
   justify-content: center;
   align-items: center;
 }
+.form-send{
+  width: 100%;
+  max-width: 100%;
+}
+
 </style>

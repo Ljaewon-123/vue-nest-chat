@@ -15,12 +15,14 @@
       <!-- <Room v-else /> -->
     </div>
   </div>
-  
-  <CreateRoom :show="show" @close="close" @addRoom="addRoom" />
+<v-snackbar color="error" location="top" v-model="snackbar" :timeout="2000">
+  {{ socketErrText }}
+</v-snackbar>
+<CreateRoom :show="show" @close="close" @addRoom="addRoom" />
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, watch } from 'vue'
 import RoomList from '@/components/RoomList.vue';
 import svgComponent from '@/components/svgs/index.vue'
 import CreateRoom from '@/components/CreateRoom.vue';
@@ -76,6 +78,18 @@ autoReloadRooms()
 onBeforeRouteLeave(() => {
   chat.off('allRooms')
 })
+
+const socketErrText = ref('')
+const snackbar = ref(false)
+
+const exceptionSocket = () => {
+  chat.on('exception', (error) => {
+    socketErrText.value = error.message
+
+    snackbar.value = true
+  })
+}
+exceptionSocket()
 
 </script>
 

@@ -18,7 +18,7 @@
         </div>
       </div>
 
-      <form>
+      <form class="form-send">
         <div class="flex">
           <input v-model="input" type="text" class="input" placeholder="Send Message" required>
           <button @click.prevent="submit()" class="btn">전송</button>
@@ -136,7 +136,7 @@ redisStream()
 }
 .btn{
   margin: 0;
-  padding: 2px 25px;
+  padding: 8px 24px;
   background-color: var(--vt-c-redis);
   border-color: var(--vt-c-redis);
 }
@@ -144,5 +144,10 @@ redisStream()
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.form-send{
+  width: 100%;
+  max-width: 100%;
 }
 </style>

@@ -24,6 +24,11 @@ const routes = [
     path: '/redis',
     name: 'Redis',
     component: () => import('@/views/RedisStreamView.vue')
+  },
+  {
+    path: '/vuetify',
+    name: 'Vuetify',
+    component: () => import('@/views/VuetifyView.vue')
   }
 ]
 

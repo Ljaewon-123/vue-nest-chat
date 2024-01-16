@@ -1,10 +1,12 @@
-import { Logger, UseGuards } from '@nestjs/common';
-import { ConnectedSocket, MessageBody, SubscribeMessage, WebSocketGateway, WebSocketServer } from '@nestjs/websockets';
+import { Logger, UseFilters, UseGuards } from '@nestjs/common';
+import { BaseWsExceptionFilter, ConnectedSocket, MessageBody, SubscribeMessage, WebSocketGateway, WebSocketServer, WsException } from '@nestjs/websockets';
 import { Socket, Server } from 'socket.io';
 import { ConfigService } from '@nestjs/config';
 import { GatewayAuthGuard } from 'src/guard/gateway-auth.guard';
+import { WsFilter } from 'src/filter/ws.filter';
 
 // 80, {namespace: 'chat'}
+@UseFilters(WsFilter)
 @WebSocketGateway({namespace: 'chat'})
 export class ChatGateway {
   private clientIntervals: Map<string, NodeJS.Timeout> = new Map();
@@ -84,6 +86,7 @@ export class ChatGateway {
     // this.server.emit('response', message)
   }
 
+  @UseGuards(GatewayAuthGuard)
   @SubscribeMessage('joinRoom')
   enterRoom(@MessageBody('roomName') roomName: string, @MessageBody('name') user:string ,@ConnectedSocket() client: Socket) {
 

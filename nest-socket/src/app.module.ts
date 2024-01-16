@@ -24,10 +24,11 @@ import { WsFilter } from './filter/ws.filter';
   controllers: [AppController],
   providers: [
     AppService,
-    {
-      provide: APP_FILTER,
-      useClass: WsFilter,
-    },
+    // socket관련에서만 사용하니 gateway상위가 더 좋다 판단.
+    // {
+    //   provide: APP_FILTER,
+    //   useClass: WsFilter,
+    // },
   ],
 })
 export class AppModule {}
