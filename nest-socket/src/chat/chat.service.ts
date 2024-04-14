@@ -20,7 +20,6 @@ export class ChatService {
     
     if(allRooms.length == 0) return []
 
-
     return allRooms.map( roomName => ({ roomName }))
   }
 

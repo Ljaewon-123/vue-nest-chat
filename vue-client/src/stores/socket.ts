@@ -10,7 +10,7 @@ export const useSocketStore = defineStore('socket', () => {
   // const socket = manager.socket('/')
   const chat = manager.socket('/chat',{
     auth: {
-      token: "t Token" // auth확인용 access: Token
+      token: "Token" // auth확인용 access: Token
     }
   })
 

@@ -1,9 +1,8 @@
 import { Logger, UseFilters, UseGuards } from '@nestjs/common';
 import { BaseWsExceptionFilter, ConnectedSocket, MessageBody, SubscribeMessage, WebSocketGateway, WebSocketServer, WsException } from '@nestjs/websockets';
 import { Socket, Server } from 'socket.io';
-import { ConfigService } from '@nestjs/config';
-import { GatewayAuthGuard } from 'src/guard/gateway-auth.guard';
 import { WsFilter } from 'src/filter/ws.filter';
+import { GatewayAuthGuard } from 'src/guard/gateway-auth.guard';
 
 // 80, {namespace: 'chat'}
 @UseFilters(WsFilter)
