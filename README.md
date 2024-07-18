@@ -11,14 +11,22 @@
 </p>
 -->
 
-
 [circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
 [circleci-url]: https://circleci.com/gh/nestjs/nest
+
+# 주요기능
+
+
+
+![nest-vue-chat.gif](./nest-vue-chat.gif)
+
+
 
 socketio를 이용한 간단한 채팅앱 vue + nestjs 로 만듬 
 websocket에 대해 공부를 하다가 Node.js맞춤형 버전인 socket.io를 공부할 목적으로 만듬 
 찾아보니까 socketio대부분을 express.js로만 하던데 암만 찾아봐도 Nestjs로 만든곳을 찾기 힘들어서 한번 찾아가면서 만들어봤다 국내는 거의 없더라 <br>
 주 기능 <br>
+
 - 오픈 채팅방 만듬 유저가 들어가기
 - 실시간으로 방목록 초기화 http로 갱신가능
 - 닉네임기능
@@ -56,29 +64,3 @@ WebSocket과의 차이점:
 4. 데이터 전송: Redis Stream은 데이터를 이벤트 단위로 저장하고 처리하는 반면, WebSocket은 클라이언트와 서버 간에 양방향으로 데이터를 전송합니다.
 
 5. 구현 및 사용: Redis Stream은 Redis 서버에서 지원하는 데이터 구조이며, WebSocket은 웹 애플리케이션에서 브라우저와 서버 간에 사용되는 프로토콜입니다.
-
-
-// ******************************************* <br>
-// xrange는 똑같은 클라이언트로 xadd와 xrange읽기 모두 처리할수있지만 <br>
-// ******  <br>
-
-// => 정정 근본적으로 클라이언트 때문은 아님  <br>
-// => xread는 보통 특정 streamId의 최신 데이터를 읽을때 많이 사용되는데 <br>
-// => 하나의 redis객체가 xadd와 xread를 모두 한다면 결국 하나가 멈추는데  <br>
-// => => 서로 다른 매서드 임에도 xadd와 xread가 모두 this.redis라면 readStream 실행시 xadd가 멈추게된다  <br>
-// => 새로운 stream data가 없어서 가져오지 못하는것 block가 > 0 이라면 null을 반환한다  <br>
-// 어찌보면 당연했던 수순 <br>
-// block가 없어도 결과는 null로 값을 가져오지 못해 근본적으로 같다 <br>
-// ****** <br>
-// ******************************* <br>
-// xread 명령은 블로킹(blocking) 방식으로 실행 즉, 데이터가 도착할 때까지 블록되어 대기 <br>
-// 이때, xread 명령이 실행된 순간에는 Redis 서버에서  <br>
-// 스트림에 새로운 데이터가 도착할 때까지 xadd 명령이 일시 중지되고, xread 명령이 완료된 후에 다시 xadd 명령이 실행 <br>
-//  Redis의 블로킹 명령은 동시에 여러 명령을 실행하는 것을 제한 <br>
-// 여러스트림 연결등 장점은 존재  <br>
-// ******************** <br>
-// xread가 실행되는순간 xadd의 return값이 실행되지 않는데  <br>
-// 이때 xread의 "$"는 그 이후 추가적인 stream이 발생하지 않아 <br>
-// 항상 null을 가져오거나 혹은 동작을 멈춘상태로 대기한다 <br>
-// block가 0일때 아무런 콘솔이 나오지 않은것은 어떠한 stream도 발생하지 않아서이다<br>
-// ************************************************ <br>
